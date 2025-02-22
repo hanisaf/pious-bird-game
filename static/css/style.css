@@ -1,0 +1,29 @@
+.canvas-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px auto;
+}
+
+canvas {
+    border: 2px solid var(--bs-secondary);
+    border-radius: 8px;
+    background-color: var(--bs-dark);
+}
+
+.game-over {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--bs-dark);
+    padding: 2rem;
+    border-radius: 8px;
+    text-align: center;
+    border: 2px solid var(--bs-secondary);
+}
+
+.score-container {
+    font-size: 1.5rem;
+    color: var(--bs-info);
+}
