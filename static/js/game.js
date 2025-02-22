@@ -4,8 +4,13 @@ class Game {
         this.ctx = this.canvas.getContext('2d');
         this.audioManager = new AudioManager();
 
+        // Set initial scale based on screen size
+        this.scale = Math.min(window.innerWidth / 800, window.innerHeight / 600);
         this.resizeCanvas();
-        window.addEventListener('resize', () => this.resizeCanvas());
+        window.addEventListener('resize', () => {
+            this.scale = Math.min(window.innerWidth / 800, window.innerHeight / 600);
+            this.resizeCanvas();
+        });
 
         this.bird = {
             x: this.canvas.width * 0.2,
@@ -22,14 +27,24 @@ class Game {
         this.spacing = 450;  // Increased from 200
         this.gap = 150;
 
+
         this.setupControls();
         this.reset();
         this.loop();
     }
 
     resizeCanvas() {
-        this.canvas.width = Math.min(800, window.innerWidth - 40);
-        this.canvas.height = 600;
+        const maxWidth = Math.min(800, window.innerWidth - 40);
+        const maxHeight = Math.min(600, window.innerHeight - 100);
+
+        this.canvas.width = maxWidth;
+        this.canvas.height = maxHeight;
+
+        // Update bird position on resize
+        if (this.bird) {
+            this.bird.x = this.canvas.width * 0.2;
+            this.bird.size = 30 * this.scale;
+        }
     }
 
     setupControls() {
@@ -49,6 +64,7 @@ class Game {
         this.bird.velocity = this.bird.lift;
         const phrase = this.audioManager.playRandomPhrase();
         this.showPhrase(phrase);
+        document.getElementById('phrase').textContent = this.currentPhrase;
     }
 
     showPhrase(phrase) {
@@ -107,7 +123,7 @@ class Game {
 
             // Check collision
             if (this.bird.y < 0 || this.bird.y > this.canvas.height ||
-                (Math.abs(obs.x - this.bird.x) < 40 && 
+                (Math.abs(obs.x - this.bird.x) < (40 * this.scale) && 
                  Math.abs(obs.centerY - this.bird.y) > this.gap/2)) {
                 this.endGame();
             }
@@ -126,16 +142,17 @@ class Game {
         // Draw obstacles
         this.ctx.fillStyle = '#795548';
         this.obstacles.forEach(obs => {
-            this.ctx.fillRect(obs.x - 20, 0, 40, obs.centerY - this.gap/2);
-            this.ctx.fillRect(obs.x - 20, obs.centerY + this.gap/2, 40, this.canvas.height);
+            const obstacleWidth = 40 * this.scale;
+            this.ctx.fillRect(obs.x - obstacleWidth/2, 0, obstacleWidth, obs.centerY - this.gap/2);
+            this.ctx.fillRect(obs.x - obstacleWidth/2, obs.centerY + this.gap/2, obstacleWidth, this.canvas.height);
         });
 
         // Draw phrase
         if (this.phraseTimer > 0) {
             this.ctx.fillStyle = 'white';
-            this.ctx.font = '24px Arial';
+            this.ctx.font = `${24 * this.scale}px Arial`;
             this.ctx.textAlign = 'center';
-            this.ctx.fillText(this.currentPhrase, this.canvas.width/2, 50);
+            this.ctx.fillText(this.currentPhrase, this.canvas.width/2, 50 * this.scale);
             this.phraseTimer--;
         }
     }

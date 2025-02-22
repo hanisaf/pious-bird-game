@@ -13,7 +13,7 @@ class AudioManager {
 
     playRandomPhrase() {
         // Play a simple tone for success
-        this.synth.triggerAttackRelease("C4", "8n");
+        //this.synth.triggerAttackRelease("C4", "8n");
 
         // Get current phrase and increment index
         const phrase = this.phrases[this.currentPhraseIndex];
@@ -23,7 +23,7 @@ class AudioManager {
 
     playGameOver() {
         // Play a lower tone for game over
-        this.synth.triggerAttackRelease("G3", "4n");
+        //this.synth.triggerAttackRelease("G3", "4n");
         return this.gameOverPhrase;
     }
 }
