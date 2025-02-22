@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en" data-bs-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>طائر الذكر</title>
+    <link rel="stylesheet" href="https://cdn.replit.com/agent/bootstrap-agent-dark-theme.min.css">
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="text-center my-4">
+            <h1>طائر الذكر</h1>
+            <div class="score-container">
+                <span>أنجاني ربي </span>
+                <span id="score">0</span>
+            </div>
+        </div>
+        
+        <div class="canvas-container">
+            <canvas id="gameCanvas"></canvas>
+        </div>
+
+        <div id="gameOver" class="game-over d-none">
+            <h2>Game Over</h2>
+            <p>الحمد لله على كل حال</p>
+            <p>أنجاني ربي <span id="finalScore">0</span>مرات</p>
+            <button class="btn btn-secondary" onclick="restartGame()">Play Again</button>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+    <script src="static/js/audio.js"></script>
+    <script src="static/js/game.js"></script>
+</body>
+</html>
